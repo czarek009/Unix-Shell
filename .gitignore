@@ -1,5 +1,6 @@
 *.o
 *.d
+*.a
 shell
 sh-tests.py
 run-clang-format.sh
