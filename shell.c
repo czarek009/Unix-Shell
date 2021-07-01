@@ -256,10 +256,23 @@ int main(int argc, char *argv[]) {
   Signal(SIGTTIN, SIG_IGN);
   Signal(SIGTTOU, SIG_IGN);
 
+  char cwd[PATH_MAX];
+  char user[64];
+  if (getlogin_r(user, sizeof(user)) != 0) {
+    msg("%sgetlogin_r() ERROR%s", RED_BG, DEFAULT);
+    return 1;
+  }
+
   char *line;
   while (true) {
     if (!sigsetjmp(loop_env, 1)) {
-      line = readline("# ");
+      if (getcwd(cwd, sizeof(cwd)) == NULL) {
+        msg("%sgetcwd() ERROR%s", RED_BG, DEFAULT);
+        return 1;
+      } else {
+        msg("%s%s%s%s:%s%s%s", BOLD_ON, BLUE, user, WHITE, GREEN, cwd, DEFAULT);
+      }
+      line = readline("$> ");
     } else {
       msg("\n");
       continue;
