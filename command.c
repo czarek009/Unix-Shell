@@ -92,7 +92,7 @@ static int do_kill(char **argv) {
 }
 
 static command_t builtins[] = {
-  {"quit", do_quit}, {"cd", do_chdir},  {"jobs", do_jobs}, {"fg", do_fg},
+  {"quit", do_quit}, {"exit", do_quit}, {"cd", do_chdir},  {"jobs", do_jobs}, {"fg", do_fg},
   {"bg", do_bg},     {"kill", do_kill}, {NULL, NULL},
 };
 
