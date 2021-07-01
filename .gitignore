@@ -1,3 +1,7 @@
 *.o
 *.d
 shell
+sh-tests.py
+run-clang-format.sh
+Makefile
+Makefile.include
