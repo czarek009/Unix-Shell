@@ -26,6 +26,27 @@ typedef char *token_t;
 #define separator_p(t) ((t) <= T_COLON)
 #define string_p(t) ((t) > T_BANG)
 
+/* outut formatting */
+#define BOLD_ON   "\e[1m"
+#define BOLD_OFF  "\e[0m"
+#define DEFAULT   "\033[0m"
+#define WHITE     "\033[37m"
+#define CYAN      "\033[36m"
+#define PURPLE    "\033[35m"
+#define BLUE      "\033[34m"
+#define YELLOW    "\033[33m"
+#define GREEN     "\033[32m"
+#define RED       "\033[31m"
+#define BLACK     "\033[30m"
+#define WHITE_BG  "\033[47m"
+#define CYAN_BG   "\033[46m"
+#define PURPLE_BG "\033[45m"
+#define BLUE_BG   "\033[44m"
+#define YELLOW_BG "\033[43m"
+#define GREEN_BG  "\033[42m"
+#define RED_BG    "\033[41m"
+#define BLACK_BG  "\033[40m"
+
 void strapp(char **dstp, const char *src);
 token_t *tokenize(char *s, int *tokc_p);
 
