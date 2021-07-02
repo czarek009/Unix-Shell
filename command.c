@@ -19,7 +19,7 @@ static int do_quit(char **argv) {
  */
 static int do_chdir(char **argv) {
   char *path = argv[0];
-  if (path == NULL)
+  if (path == NULL || path[0] == '~')
     path = getenv("HOME");
   int rc = chdir(path);
   if (rc < 0) {
