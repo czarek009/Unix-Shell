@@ -187,7 +187,7 @@ bool resumejob(int j, int bg, sigset_t *mask) {
     return false;
 
   /* TODO: Continue stopped job. Possibly move job to foreground slot. */
-  msg("[%d] continue '%s'\n", j, jobcmd(j));
+  msg("%s[%d] continue '%s'\n%s", GREEN, j, jobcmd(j), DEFAULT);
   Kill(-jobs[j].pgid, SIGCONT);
   if (!bg) {
     movejob(j, FG);
@@ -229,21 +229,21 @@ void watchjobs(int which) {
 
     if (state == FINISHED) {
       if (extcd >= 128) {
-        msg("[%d] killed '%s' by signal %d\n", j, cmd, extcd - 128);
+        msg("%s[%d] killed '%s' by signal %d\n%s", RED, j, cmd, extcd - 128, DEFAULT);
       } else {
-        msg("[%d] exited '%s', status=%d\n", j, cmd, extcd);
+        msg("%s[%d] exited '%s', status=%d\n%s", RED, j, cmd, extcd, DEFAULT);
       }
       deljob(&jobs[j]);
       continue;
     }
 
     if (state == STOPPED && (which == -1 || which == STOPPED)) {
-      msg("[%d] suspended '%s'\n", j, cmd);
+      msg("%s[%d] suspended '%s'\n%s", YELLOW, j, cmd, DEFAULT);
       continue;
     }
 
     if (state == RUNNING && (which == -1 || which == RUNNING)) {
-      msg("[%d] running '%s'\n", j, jobcmd(j));
+      msg("%s[%d] running '%s'\n%s", GREEN, j, jobcmd(j), DEFAULT);
       continue;
     }
     /* TODO END */
@@ -265,7 +265,7 @@ int monitorjob(sigset_t *mask) {
     Tcgetattr(tty_fd, &jobs[0].tmodes);
     int new_slot = addjob(0, BG);
     movejob(0, new_slot);
-    msg("[%d] suspended '%s'\n", new_slot, jobcmd(new_slot));
+    msg("%s[%d] suspended '%s'\n%s", YELLOW, new_slot, jobcmd(new_slot), DEFAULT);
   }
   if (state == STOPPED || state == FINISHED) {
     Tcsetattr(tty_fd, 0, &shell_tmodes);
